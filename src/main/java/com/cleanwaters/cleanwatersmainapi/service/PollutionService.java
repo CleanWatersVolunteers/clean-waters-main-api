@@ -28,7 +28,7 @@ public class PollutionService {
   @Transactional
   public PollutionDTO createPollution(PollutionCreateDTO pollutionCreateDTO) {
     Pollution entity = pollutionCreateMapper.toEntity(pollutionCreateDTO);
-    entity.setCreatedAt(new Timestamp(System.currentTimeMillis())); // Устанавливаем текущую дату/время
+    entity.setCreatedAt(new Timestamp(System.currentTimeMillis()));
     Pollution saved = pollutionRepository.save(entity);
     return pollutionMapper.toDto(saved);
   }
