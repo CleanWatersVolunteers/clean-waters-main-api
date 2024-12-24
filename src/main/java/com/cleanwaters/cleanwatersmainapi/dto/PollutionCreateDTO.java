@@ -10,8 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class PollutionDTO implements BaseDTO {
-  private Long id;
+public class PollutionCreateDTO implements BaseDTO {
   private String longitude;
   private String latitude;
   private String comment;
@@ -19,7 +18,4 @@ public class PollutionDTO implements BaseDTO {
   private String status;
   private String infoSource;
   private Timestamp discoveredAt;
-  private Timestamp createdAt;
-  private Timestamp updatedAt;
-  private Timestamp deletedAt;
 }

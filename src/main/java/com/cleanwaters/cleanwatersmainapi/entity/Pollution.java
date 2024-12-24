@@ -16,6 +16,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 @Data
 @NoArgsConstructor
@@ -47,12 +49,14 @@ public class Pollution {
   @Column(nullable = false, length = 255)
   private String infoSource;
 
-  @Column(nullable = false)
+  @Column()
   private Timestamp discoveredAt;
 
-  @Column(nullable = false)
+  @CreationTimestamp
+  @Column()
   private Timestamp createdAt;
 
+  @UpdateTimestamp
   @Column
   private Timestamp updatedAt;
 

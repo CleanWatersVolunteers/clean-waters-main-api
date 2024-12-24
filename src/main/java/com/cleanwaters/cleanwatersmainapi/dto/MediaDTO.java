@@ -1,5 +1,6 @@
 package com.cleanwaters.cleanwatersmainapi.dto;
 
+import java.sql.Timestamp;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -14,5 +15,5 @@ public class MediaDTO implements BaseDTO {
   private String objectKey;
   private String bucketName;
   private String mimeType;
-  private String createdAt;
+  private Timestamp createdAt;
 }

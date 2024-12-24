@@ -65,7 +65,7 @@ public class Bird {
 
   @ManyToMany
   @JoinTable(
-      name = "bird_has_media",
+      name = "bird_media",
       joinColumns = @JoinColumn(name = "bird_id"),
       inverseJoinColumns = @JoinColumn(name = "media_id")
   )

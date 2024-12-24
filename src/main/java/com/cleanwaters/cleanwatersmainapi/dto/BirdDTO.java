@@ -1,5 +1,6 @@
 package com.cleanwaters.cleanwatersmainapi.dto;
 
+import java.sql.Timestamp;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -17,9 +18,9 @@ public class BirdDTO implements BaseDTO {
   private Integer priority;
   private Boolean captured;
   private String infoSource;
-  private String discoveredAt;
-  private String createdAt;
-  private String updatedAt;
-  private String deletedAt;
+  private Timestamp discoveredAt;
+  private Timestamp createdAt;
+  private Timestamp updatedAt;
+  private Timestamp deletedAt;
   private Long pollutionId;
 }
