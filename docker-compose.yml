@@ -1,0 +1,29 @@
+services:
+  clean-waters-postgres:
+    image: postgis/postgis:17-3.4
+    container_name: clean-waters-postgres
+    environment:
+      POSTGRES_DB: clean-waters
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5441:5432"
+    volumes:
+      - /home/livcy/clean-waters:/docker-entrypoint-initdb.d
+      - ./schema.sql:/docker-entrypoint-initdb.d/schema.sql
+    networks:
+      - clean-waters-net
+
+  clean-waters-main-service:
+    build: .
+    container_name: clean-waters-main-service
+    ports:
+      - "8073:8073"
+    depends_on:
+      - clean-waters-postgres
+    networks:
+      - clean-waters-net
+
+networks:
+  clean-waters-net:
+    driver: bridge
