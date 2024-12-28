@@ -38,8 +38,8 @@ public class Media {
   @Column(nullable = false)
   private Timestamp createdAt;
 
-  @ManyToMany(mappedBy = "media")
-  private List<Pollution> pollutions;
+//  @ManyToMany(mappedBy = "media")
+//  private List<Pollution> pollutions;
 
   @ManyToMany(mappedBy = "media")
   private List<PickUpPoint> pickUpPoints;

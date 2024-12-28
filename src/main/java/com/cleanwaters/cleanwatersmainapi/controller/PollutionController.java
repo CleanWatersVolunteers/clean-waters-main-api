@@ -1,18 +1,18 @@
 package com.cleanwaters.cleanwatersmainapi.controller;
 
 import com.cleanwaters.cleanwatersmainapi.dto.PollutionCreateDTO;
-import com.cleanwaters.cleanwatersmainapi.dto.PollutionDTO;
+import com.cleanwaters.cleanwatersmainapi.dto.pollution.PollutionDTO;
+import com.cleanwaters.cleanwatersmainapi.dto.pollution.PollutionFilter;
 import com.cleanwaters.cleanwatersmainapi.service.PollutionService;
+
+import java.time.LocalDateTime;
 import java.util.List;
+
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1/pollution")
@@ -36,8 +36,27 @@ public class PollutionController {
   }
 
   @GetMapping
-  public ResponseEntity<List<PollutionDTO>> getAllPollutions() {
-    List<PollutionDTO> pollutions = pollutionService.getAllPollutions();
+  @Operation(summary = "Получить все загрязнения из базы по заданным фильтрам")
+  public ResponseEntity<List<PollutionDTO>> getAllPollutions(
+          @Parameter(description = "Статус загрязнения (в любом регистре, можно неск значений)", example = "собрано")
+          @RequestParam(required = false) List<String> status,
+          @Parameter(description = "Обнаружено до", example = "2024-12-24T00:00:00")
+          @RequestParam(required = false) LocalDateTime discoveredBefore,
+          @Parameter(description = "Обнаружено после", example = "2024-12-24T00:00:00")
+          @RequestParam(required = false) LocalDateTime discoveredAfter,
+          @Parameter(description = "Логин или ссылка на пост")
+          @RequestParam(required = false) String infoSource,
+          @Parameter(description = "Тип поверхности (в любом регистре, можно неск значений", example = "песок, море, галька, растительность")
+          @RequestParam(required = false) List<String> surfaceType
+          ) {
+    var pollutionFilter = PollutionFilter.builder()
+            .status(status)
+            .discoveredBefore(discoveredBefore)
+            .discoveredAfter(discoveredAfter)
+            .infoSource(infoSource)
+            .surfaceType(surfaceType)
+            .build();
+    var pollutions = pollutionService.getAllPollutions(pollutionFilter);
     return ResponseEntity.ok(pollutions);
   }
 

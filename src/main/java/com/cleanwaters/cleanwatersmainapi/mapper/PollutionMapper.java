@@ -1,6 +1,6 @@
 package com.cleanwaters.cleanwatersmainapi.mapper;
 
-import com.cleanwaters.cleanwatersmainapi.dto.PollutionDTO;
+import com.cleanwaters.cleanwatersmainapi.dto.pollution.PollutionDTO;
 import com.cleanwaters.cleanwatersmainapi.entity.Pollution;
 import org.mapstruct.BeanMapping;
 import org.mapstruct.Mapper;

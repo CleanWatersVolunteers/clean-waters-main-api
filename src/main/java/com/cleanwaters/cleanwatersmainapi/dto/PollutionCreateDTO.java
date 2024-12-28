@@ -1,6 +1,7 @@
 package com.cleanwaters.cleanwatersmainapi.dto;
 
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -17,5 +18,5 @@ public class PollutionCreateDTO implements BaseDTO {
   private String oldDataContainer;
   private String status;
   private String infoSource;
-  private Timestamp discoveredAt;
+  private LocalDateTime discoveredAt;
 }

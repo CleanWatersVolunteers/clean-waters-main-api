@@ -5,17 +5,13 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import java.sql.Timestamp;
-import java.util.List;
+import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.FieldNameConstants;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -25,6 +21,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 @Builder
 @Entity
 @Table(name = "pollution")
+@FieldNameConstants
 public class Pollution {
 
   @Id
@@ -49,39 +46,19 @@ public class Pollution {
   @Column(nullable = false, length = 255)
   private String infoSource;
 
-  @Column()
-  private Timestamp discoveredAt;
+  private String surfaceType;
+
+  @Column
+  private LocalDateTime discoveredAt;
 
   @CreationTimestamp
-  @Column()
-  private Timestamp createdAt;
+  @Column
+  private LocalDateTime createdAt;
 
   @UpdateTimestamp
   @Column
-  private Timestamp updatedAt;
+  private LocalDateTime updatedAt;
 
   @Column
-  private Timestamp deletedAt;
-
-  @OneToMany(mappedBy = "pollution")
-  private List<PickUpPoint> pickUpPoints;
-
-  @OneToMany(mappedBy = "pollution")
-  private List<Bird> birds;
-
-  @ManyToMany
-  @JoinTable(
-      name = "pollution_type_pollution",
-      joinColumns = @JoinColumn(name = "pollution_id"),
-      inverseJoinColumns = @JoinColumn(name = "pollution_type_id")
-  )
-  private List<PollutionType> pollutionTypes;
-
-  @ManyToMany
-  @JoinTable(
-      name = "pollution_media",
-      joinColumns = @JoinColumn(name = "pollution_id"),
-      inverseJoinColumns = @JoinColumn(name = "media_id")
-  )
-  private List<Media> media;
+  private LocalDateTime deletedAt;
 }

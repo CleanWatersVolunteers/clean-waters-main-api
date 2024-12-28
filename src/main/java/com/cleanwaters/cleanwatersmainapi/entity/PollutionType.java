@@ -28,6 +28,6 @@ public class PollutionType {
   @Column(nullable = false, length = 45)
   private String name;
 
-  @ManyToMany(mappedBy = "pollutionTypes")
-  private List<Pollution> pollutions;
+//  @ManyToMany(mappedBy = "pollutionTypes")
+//  private List<Pollution> pollutions;
 }
