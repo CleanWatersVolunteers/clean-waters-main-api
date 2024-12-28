@@ -63,17 +63,17 @@ public class PollutionService {
 
     if (filter.discoveredBefore() != null) {
       spec = spec.and((root, query, criteriaBuilder) ->
-              criteriaBuilder.lessThan(root.get("discoveredAt"), filter.discoveredBefore()));
+              criteriaBuilder.lessThan(root.get(Pollution.Fields.discoveredAt), filter.discoveredBefore()));
     }
 
     if (filter.discoveredAfter() != null) {
       spec = spec.and((root, query, criteriaBuilder) ->
-              criteriaBuilder.greaterThanOrEqualTo(root.get("discoveredAt"), filter.discoveredAfter()));
+              criteriaBuilder.greaterThanOrEqualTo(root.get(Pollution.Fields.discoveredAt), filter.discoveredAfter()));
     }
 
     if (filter.infoSource() != null) {
       spec = spec.and((root, query, criteriaBuilder) ->
-              criteriaBuilder.equal(root.get("infoSource"), filter.infoSource()));
+              criteriaBuilder.equal(root.get(Pollution.Fields.infoSource), filter.infoSource()));
     }
 
     if (!CollectionUtils.isEmpty(filter.status())) {
@@ -89,21 +89,19 @@ public class PollutionService {
                 })
                 .collect(Collectors.toSet());
 
-        return criteriaBuilder.lower(root.get("status")).in(normalizedStatuses);
+        return criteriaBuilder.lower(root.get(Pollution.Fields.status)).in(normalizedStatuses);
       });
     }
 
     if (!CollectionUtils.isEmpty(filter.surfaceType())) {
       spec = spec.and((root, query, criteriaBuilder) -> {
-        List<String> lowerCaseSurfaceTypes = filter.surfaceType().stream()
+        var surfaceFilters = filter.surfaceType().stream()
                 .map(String::toLowerCase)
-                .toList();
-
-        return criteriaBuilder.or(lowerCaseSurfaceTypes.stream()
                 .map(type -> criteriaBuilder.like(
-                        criteriaBuilder.lower(root.get("surfaceType")),
-                        "%" + type + "%"))
-                .toArray(Predicate[]::new));
+                        criteriaBuilder.lower(root.get(Pollution.Fields.surfaceType)), "%" + type + "%"))
+                .toArray(Predicate[]::new);
+
+        return criteriaBuilder.or(surfaceFilters);
       });
     }
     return spec;
